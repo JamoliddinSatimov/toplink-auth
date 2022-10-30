@@ -41,8 +41,233 @@
             }
           }
         }
+      },
+      "/register": {
+        "post": {
+          "responses": {
+            "200": {
+              "description": "The spacecraft corresponding to the provided `spacecraftId`",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Spacecraft"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No spacecraft found for the provided `spacecraftId`",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login": {
+        "parameters": [
+          {
+            "name": "spacecraftId",
+            "description": "bodyda json formatda",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/login"
+            }
+          }
+        ],
+        "post": {
+          "responses": {
+            "200": {
+              "description": "sizga access_token beriladi",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/loginresponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "objectda error message va statusi keladi",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/forgotpage": {
+        "post": {
+          "parameters": [
+            {
+              "name": "spacecraftId",
+              "description": "bodyda json formatda email jonatasz",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "emailingizga kod yuborildi degan habar qaytadi",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Spacecraft"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "message va status qaytadi jsonda",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/verifycode": {
+        "post": {
+          "parameters": [
+            {
+              "name": "spacecraftId",
+              "description": "bodyda json formatda access_code key bilan emailingizga kelgan kodni jonatasiz",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "$ref": "#/components/schemas/verifyCode"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "sizga update qilish uchun token beriladi",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Spacecraft"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No spacecraft found for the provided `spacecraftId`",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/password": {
+        "parameters": [
+          {
+            "name": "spacecraftId",
+            "description": "json formatda bodydan jonatasiz",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/passwordUpdate"
+            }
+          }
+        ],
+        "put": {
+          "responses": {
+            "200": {
+              "description": "sizga message qaytadi",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Spacecraft"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No spacecraft found for the provided `spacecraftId`",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
+    
     "components": {
       "schemas": {
         "SpacecraftId": {
@@ -58,10 +283,12 @@
           ],
           "properties": {
             "id": {
-                "type": "string"
+                "type": "string",
+                "required": true
             },
             "fullname": {
-              "type": "string"
+              "type": "string",
+              "required": true
             },
             "phone": {
               "type": "string"
@@ -75,6 +302,73 @@
             "username": {
                 "type": "string"
               }
+          }
+        },
+        "login": { 
+          "type": "object",
+          "required": [
+            "email",
+            "password"
+          ],
+          "properties": {
+            
+           
+            "email": {
+              "type": "string"
+            },
+            "password": {
+                "type": "string"
+              }
+           
+          }
+        },
+        "passwordUpdate": { 
+          "type": "object",
+          "required": [
+            "confirmpass",
+            "password"
+          ],
+          "properties": {
+            
+           
+            "confirmpass": {
+              "type": "string"
+            },
+            "password": {
+                "type": "string"
+              }
+           
+          }
+        },
+        "verifyCode": { 
+          "type": "object",
+          "required": [
+            "access_code"
+          ],
+          "properties": {
+            
+            "access_code": {
+              "type": "string"
+            }
+            
+          }
+        },
+        "loginresponse": { 
+          "type": "object",
+          "required": [
+            "email",
+            "password"
+          ],
+          "properties": {
+            
+           
+            "success": {
+              "type": "string"
+            },
+            "access_token": {
+                "type": "string"
+              }
+           
           }
         },
         "Error": {

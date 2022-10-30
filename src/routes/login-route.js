@@ -10,6 +10,6 @@ loginRouter
     .post("/login", usersController.LOGIN)
     .post('/forgotpage', forgotPassword.POSTEMAIL)
     .post('/verifycode', verifyNodemailerCode, forgotPassword.POSTVERIFYCODE)
-    .post('/password', verifyUpdateToken , forgotPassword.UPDATEPASSWORD)
+    .put('/password', verifyUpdateToken , forgotPassword.UPDATEPASSWORD)
 
 module.exports = loginRouter    
