@@ -10,9 +10,6 @@ module.exports = {
         const allUsers = await usersModel.findAll()
         .catch(err => next(new CustomErrorHandler(err.message, 503)))
 
-        console.log(req.cookies)
-        
-
         return res.json({
             success: true,
             users: allUsers

@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "2",
+      "title": "Toplink",
+      "description": "Authorization"
+    },
+    "paths": {
+      "/users": {
+        "get": {
+          "responses": {
+            "200": {
+              "description": "The spacecraft corresponding to the provided `spacecraftId`",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Spacecraft"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No spacecraft found for the provided `spacecraftId`",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "SpacecraftId": {
+          "description": "The unique identifier of a spacecraft",
+          "type": "string"
+        },
+        "Spacecraft": { 
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "type"
+          ],
+          "properties": {
+            "id": {
+                "type": "string"
+            },
+            "fullname": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+                "type": "string"
+              },
+            "username": {
+                "type": "string"
+              }
+          }
+        },
+        "Error": {
+          "type": "object",
+          "required": [
+            "message",
+            "status"
+          ],
+          "properties": {
+            "message": {
+              "description": "A human readable error message",
+              "type": "string"
+            },
+            "status": {
+                "description": "A human readable error message",
+                "type": "number"
+              }
+          }
+        }
+      },
+      "securitySchemes": {
+        "ApiKey": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-Api-Key"
+        }
+      }
+    },
+    "security": [
+      {
+        "ApiKey": []
+      }
+    ]
+  }
