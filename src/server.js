@@ -5,6 +5,7 @@ const sequelize = require("./utils/sequelize")
 const router = require("./routes")
 const loginRouter = require("./routes/login-route")
 const errorHandle = require("./middlewares/errorHandle")
+const PORT = process.env.PORT || 7070
 
 const app = express()
 
@@ -23,4 +24,4 @@ sequelize.authenticate()
 sequelize.sync()
 
 
-app.listen(7070, console.log(7070))
+app.listen(PORT, console.log(PORT))
