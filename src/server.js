@@ -23,5 +23,12 @@ sequelize.authenticate()
 
 sequelize.sync()
 
+app.use("/*", (req, res) => {
+    res.json({
+        success:false,
+        message: "url invalid"
+    })
+})
+
 
 app.listen(PORT, console.log(PORT))
